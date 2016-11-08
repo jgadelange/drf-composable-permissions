@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.test import TestCase
 from rest_framework.permissions import BasePermission
 
@@ -16,7 +18,7 @@ class F(BasePermission):
         return False
 
 
-class PTest(TestCase):
+class TestCompose(TestCase):
     def test_identity(self):
         table = [
             (T, True),
