@@ -2,3 +2,4 @@ site_name: drf-composable-permissions
 site_description: Compose your permission classes for django-rest-framework.
 repo_url: https://github.com/jgadelange/drf-composable-permissions
 site_dir: html
+extra_css: [extra.css]
