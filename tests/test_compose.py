@@ -27,8 +27,10 @@ class TestCompose(TestCase):
 
         for c1, outcome in table:
             combined = P(c1)
-            self.assertEqual(combined.has_permission(None, None), outcome)
-            self.assertEqual(combined.has_object_permission(None, None, None), outcome)
+            self.assertEqual(combined.has_permission(None, None), outcome,
+                             "{} is not {}".format(combined, outcome))
+            self.assertEqual(combined.has_object_permission(None, None, None), outcome,
+                             "{} is not {}".format(combined, outcome))
 
     def test_not(self):
         table = [
@@ -38,8 +40,10 @@ class TestCompose(TestCase):
 
         for c1, outcome in table:
             combined = ~P(c1)
-            self.assertEqual(combined.has_permission(None, None), outcome)
-            self.assertEqual(combined.has_object_permission(None, None, None), outcome)
+            self.assertEqual(combined.has_permission(None, None), outcome,
+                             "{} is not {}".format(combined, outcome))
+            self.assertEqual(combined.has_object_permission(None, None, None), outcome,
+                             "{} is not {}".format(combined, outcome))
 
     def test_or(self):
         table = [
@@ -51,8 +55,10 @@ class TestCompose(TestCase):
 
         for c1, c2, outcome in table:
             combined = P(c1) | P(c2)
-            self.assertEqual(combined.has_permission(None, None), outcome)
-            self.assertEqual(combined.has_object_permission(None, None, None), outcome)
+            self.assertEqual(combined.has_permission(None, None), outcome,
+                             "{} is not {}".format(combined, outcome))
+            self.assertEqual(combined.has_object_permission(None, None, None), outcome,
+                             "{} is not {}".format(combined, outcome))
 
     def test_and(self):
         table = [
@@ -64,5 +70,7 @@ class TestCompose(TestCase):
 
         for c1, c2, outcome in table:
             combined = P(c1) & P(c2)
-            self.assertEqual(combined.has_permission(None, None), outcome)
-            self.assertEqual(combined.has_object_permission(None, None, None), outcome)
+            self.assertEqual(combined.has_permission(None, None), outcome,
+                             "{} is not {}".format(combined, outcome))
+            self.assertEqual(combined.has_object_permission(None, None, None), outcome,
+                             "{} is not {}".format(combined, outcome))

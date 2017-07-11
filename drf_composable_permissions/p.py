@@ -1,3 +1,9 @@
+from __future__ import unicode_literals
+
+from django.utils.encoding import python_2_unicode_compatible
+
+
+@python_2_unicode_compatible
 class Composable(object):
     def __or__(self, other):
         return Or(self, other)
@@ -10,6 +16,9 @@ class Composable(object):
 
     def __call__(self):
         return self
+
+    def __str__(self):
+        return self.__repr__()
 
 
 class Or(Composable):
@@ -25,6 +34,12 @@ class Or(Composable):
         return self.c1().has_object_permission(request, view, obj) or \
             self.c2().has_object_permission(request, view, obj)
 
+    def __repr__(self):
+        return "({} or {})".format(
+            self.c1(),
+            self.c2()
+        )
+
 
 class And(Composable):
     def __init__(self, c1, c2):
@@ -39,6 +54,12 @@ class And(Composable):
         return self.c1().has_object_permission(request, view, obj) and \
             self.c2().has_object_permission(request, view, obj)
 
+    def __repr__(self):
+        return "({} and {})".format(
+            self.c1(),
+            self.c2()
+        )
+
 
 class Not(Composable):
     def __init__(self, c1):
@@ -50,6 +71,11 @@ class Not(Composable):
     def has_object_permission(self, request, view, obj):
         return not self.c1().has_object_permission(request, view, obj)
 
+    def __repr__(self):
+        return "!{}".format(
+            self.c1()
+        )
+
 
 class P(Composable):
     def __init__(self, c1):
@@ -60,3 +86,6 @@ class P(Composable):
 
     def has_object_permission(self, request, view, obj):
         return self.c1().has_object_permission(request, view, obj)
+
+    def __repr__(self):
+        return type(self.c1()).__name__
